@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,9 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -30,9 +34,20 @@ export class LoginComponent implements OnInit {
     this.type = this.isText ? "text" : "password";
   }
 
-  onSubmit(){
+  onLogin(){
     if (this.loginForm.valid){
       console.log(this.loginForm.value);
+      this.auth.login(this.loginForm.value).subscribe({
+        next: (res) => {
+          console.log(res);
+          alert(res.message);
+          this.loginForm.reset();
+          this.router.navigate(['dashboard']);
+        },
+        error: (err) => {
+          alert(err?.error.message);
+        }
+      })
     } else {
       console.log("Form is not valid");
       this.validateAllFormFileds(this.loginForm);
