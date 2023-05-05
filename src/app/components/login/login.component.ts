@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private toast: NgToastService
   ) { }
 
   ngOnInit(): void {
@@ -40,12 +42,13 @@ export class LoginComponent implements OnInit {
       this.auth.login(this.loginForm.value).subscribe({
         next: (res) => {
           console.log(res);
-          alert(res.message);
+          this.toast.success({detail:'Success', summary:res.message, duration:5000});
           this.loginForm.reset();
           this.router.navigate(['dashboard']);
         },
         error: (err) => {
-          alert(err?.error.message);
+          console.log(err);
+          this.toast.error({detail:'Error', summary:'something error', position:'br', duration:5000});
         }
       })
     } else {
