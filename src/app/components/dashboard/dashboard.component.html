@@ -1,5 +1,23 @@
 <p>dashboard works!</p>
+<hr/>
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">Navbar</a>
+    <div>
+      <h4>Hello {{fullName}}</h4>
+    </div>
+    <!-- <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form> -->
+  </div>
+</nav>
+<hr>
 <button class="btn btn-primary" (click)="logout()">Logout</button>
-<ul *ngFor="let user of users">
-  <li>{{user.userName}}</li>
-</ul>
+
+<!--only admin see list-->
+<ng-container *ngIf="role === 'Admin'">
+  <ul *ngFor="let user of users">
+    <li>{{user.userName}}</li>
+  </ul>
+</ng-container>
