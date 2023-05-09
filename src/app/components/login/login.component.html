@@ -28,7 +28,7 @@
                 *Password is required
               </small>
               <div class="form-inline fr mt-4">
-                <a id="forget" class="font-weight-bold">Forget Password?</a>
+                <a id="forget" data-bs-toggle="modal" data-bs-target="#exampleModal" class="font-weight-bold">Forget Password?</a>
               </div>
               <button [disabled]="loginForm.invalid" (click)="onLogin()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Login</button>
               <div class="text-center pt-4 text-muted">Don't have account?
@@ -44,6 +44,33 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title">
+          <span style="font-size: 25px;font-weight: 700;">Forget your Password?</span><br>
+          <small>Please provide your E-mail we will send the reset link</small>
+        </p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="from-group pt-3">
+          <div class="input-field">
+            <span class="fa fa-user p-2"></span>
+            <input type="text" placeholder="Email" [(ngModel)]="emailReset">
+          </div>
+          <small class="text-danger">*Email is required</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary" (click)="onClickResetPassword()">Send</button>
       </div>
     </div>
   </div>

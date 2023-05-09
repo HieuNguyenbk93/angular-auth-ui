@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { AuthService } from 'src/app/services/auth.service';
+import { ResetPasswordService } from 'src/app/services/reset-password.service';
 import { UserStoreService } from 'src/app/services/user-store.service';
 
 @Component({
@@ -16,13 +17,15 @@ export class LoginComponent implements OnInit {
   isText: boolean = false;
   eyeIcon: string = "fa-eye-slash"
   loginForm!: FormGroup;
+  emailReset: string = "";
 
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router,
     private toast: NgToastService,
-    private userStore : UserStoreService
+    private userStore : UserStoreService,
+    private resetService: ResetPasswordService
   ) { }
 
   ngOnInit(): void {
@@ -72,6 +75,23 @@ export class LoginComponent implements OnInit {
         control.markAsDirty({onlySelf:true});
       } else if (control instanceof FormGroup) {
         this.validateAllFormFileds(control);
+      }
+    })
+  }
+
+  onClickResetPassword(){
+    console.log(this.emailReset);
+
+    this.resetService.sendResetPasswordLink(this.emailReset).subscribe({
+      next: (res) => {
+        this.toast.success({detail:'Success', summary:'Reset success', duration:5000});
+        this.emailReset = "";
+        const btnClose = document.getElementById("btnClose");
+        btnClose?.click();
+      },
+      error: (err) => {
+        console.log(err);
+        this.toast.error({detail:'Error', summary:'something error', position:'br', duration:5000});
       }
     })
   }
