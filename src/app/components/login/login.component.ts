@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { AuthService } from 'src/app/services/auth.service';
+import { MenuService } from 'src/app/services/menu.service';
 import { ResetPasswordService } from 'src/app/services/reset-password.service';
 import { UserStoreService } from 'src/app/services/user-store.service';
 
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private toast: NgToastService,
     private userStore : UserStoreService,
-    private resetService: ResetPasswordService
+    private resetService: ResetPasswordService,
+    private menuService: MenuService
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit {
           const tokenPayload = this.auth.decodeToken();
           this.userStore.setFullNameForStore(tokenPayload.name);
           this.userStore.setRoleForStore(tokenPayload.role);
+          this.menuService.updatmenu.next();
           this.loginForm.reset();
           this.router.navigate(['dashboard']);
         },

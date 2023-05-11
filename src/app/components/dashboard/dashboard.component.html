@@ -21,3 +21,15 @@
     <li>{{user.userName}}</li>
   </ul>
 </ng-container>
+
+<!--Menu-->
+<div>
+  <a *ngIf="displayAdmin" href="" class="p-2">Page for admin</a>
+  <a *ngIf="displayUser" href="" class="p-2">Page for user</a>
+  <a href="" class="p-2">Page for staff</a>
+</div>
+<hr>
+<div>
+  <a *ngFor="let item of menuList$" class="p-2">{{item}}</a>
+</div>
+

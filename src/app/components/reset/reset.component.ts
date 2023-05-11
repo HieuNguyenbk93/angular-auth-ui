@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResetPassword } from 'src/app/models/reset-password.model';
 import { ResetPasswordService } from 'src/app/services/reset-password.service';
 
@@ -19,7 +19,8 @@ export class ResetComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private resetService: ResetPasswordService
+    private resetService: ResetPasswordService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
